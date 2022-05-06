@@ -42,6 +42,8 @@ class MB extends Component {
     Ycamera.init(w, h)
     Yrenderer.init(w, h)
     Yscene.init()
+    // TODO 坐标系辅助 用完删除
+    Yscene.initHelper()
     Ylight.init()
     Yfloor.init()
     Ygeometry.initMainLeft(["MLbox", "MLcylinder", "MLcone", "MLsphere", "MLtorus", "MLicosahedron", "MLcapsule"])
@@ -78,6 +80,33 @@ class MB extends Component {
     })
   }
 
+  createMesh(type) {
+    switch (type) {
+      case "box":
+        Ygeometry.createBox()
+        break
+      case "cylinder":
+        Ygeometry.createCylinder()
+        break
+      case "cone":
+        Ygeometry.createCone()
+        break
+      case "sphere":
+        Ygeometry.createSphere()
+        break
+      case "torus":
+        Ygeometry.createTorus()
+        break
+      case "icosahedron":
+        Ygeometry.createIcosahedron()
+        break
+      case "capsule":
+        Ygeometry.createCapsule()
+        break
+    }
+    Yrenderer.renderer.render(Yscene.scene, Ycamera.camera)
+  }
+
   render() {
     return (
       <div id="MB">
@@ -102,13 +131,13 @@ class MB extends Component {
 
         {/* 几何体区域 */}
         <div id="mainLeft">
-          <div id="MLbox" className="geometryItem"></div>
-          <div id="MLcylinder" className="geometryItem"></div>
-          <div id="MLcone" className="geometryItem"></div>
-          <div id="MLsphere" className="geometryItem"></div>
-          <div id="MLtorus" className="geometryItem"></div>
-          <div id="MLicosahedron" className="geometryItem"></div>
-          <div id="MLcapsule"className="geometryItem"></div>
+          <div id="MLbox" className="geometryItem" onClick={() => this.createMesh('box')}/>
+          <div id="MLcylinder" className="geometryItem" onClick={() => this.createMesh('cylinder')}/>
+          <div id="MLcone" className="geometryItem" onClick={() => this.createMesh('cone')}/>
+          <div id="MLsphere" className="geometryItem" onClick={() => this.createMesh('sphere')}/>
+          <div id="MLtorus" className="geometryItem" onClick={() => this.createMesh('torus')}/>
+          <div id="MLicosahedron" className="geometryItem" onClick={() => this.createMesh('icosahedron')}/>
+          <div id="MLcapsule"className="geometryItem" onClick={() => this.createMesh('capsule')}/>
         </div>
 
         {/* 图层区域 */}

@@ -39,26 +39,22 @@ class YEvents {
     const v_left = document.getElementById(left)
 
     v_top.addEventListener('mousedown', event => {
-      Ycamera.camera.rotation.x += 1 * Math.PI / 180
-      Ycamera.camera.updateProjectionMatrix()
+      Yfloor.floor.rotation.x += 1 * Math.PI / 180
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
 
     v_right.addEventListener('mousedown', event => {
-      Ycamera.camera.rotation.y += 1 * Math.PI / 180
-      Ycamera.camera.updateProjectionMatrix()
+      Yfloor.floor.rotation.y += 1 * Math.PI / 180
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
 
     v_bottom.addEventListener('mousedown', event => {
-      Ycamera.camera.rotation.x -= 1 * Math.PI / 180
-      Ycamera.camera.updateProjectionMatrix()
+      Yfloor.floor.rotation.x -= 1 * Math.PI / 180
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
 
     v_left.addEventListener('mousedown', event => {
-      Ycamera.camera.rotation.y -= 1 * Math.PI / 180
-      Ycamera.camera.updateProjectionMatrix()
+      Yfloor.floor.rotation.y -= 1 * Math.PI / 180
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
   }

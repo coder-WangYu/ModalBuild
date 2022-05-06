@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-05-05 15:52:16
  * @Description: 场景类：场景及相关方法
  */
-import { Scene } from "three";
+import {AxesHelper, Scene} from "three";
 class YScene {
   constructor() {
     this.scene = undefined
@@ -14,6 +14,12 @@ class YScene {
   init() {
     const scene = new Scene()
     this.scene = scene
+  }
+
+  // TODO 用完删除
+  initHelper() {
+    const axes = new AxesHelper(100)
+    this.scene.add(axes)
   }
 }
 

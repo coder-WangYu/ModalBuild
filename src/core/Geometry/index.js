@@ -12,11 +12,17 @@ import {
   WebGLRenderer,
   OrthographicCamera,
   Scene,
-  CylinderGeometry, ConeGeometry, SphereGeometry, TorusGeometry, IcosahedronGeometry, CapsuleGeometry
+  CylinderGeometry,
+  ConeGeometry,
+  SphereGeometry,
+  TorusGeometry,
+  IcosahedronGeometry,
+  CapsuleGeometry
 } from "three";
 import Yscene from "../Scene";
 
 class YGeometry {
+  // 创建左边栏几何体菜单
   initMainLeft(ids) {
     // 获取单元格宽高
     const width = document.getElementById("MLbox").clientWidth
@@ -102,13 +108,54 @@ class YGeometry {
     initMainLeftMesh()
   }
 
-  initBox() {
-    const geometry = new BoxGeometry(10, 10, 10)
-    const meterial = new MeshBasicMaterial({
-      color: 0xff0000
-    })
-    const cube = new Mesh(geometry, meterial)
-    Yscene.scene.add(cube)
+  createBox() {
+    const geometry = new BoxGeometry(6, 6, 6)
+    const meterial = new MeshBasicMaterial({color: 'red'})
+    const box = new Mesh(geometry, meterial)
+    Yscene.scene.add(box)
+
+  }
+
+  createCylinder() {
+    const geometry = new CylinderGeometry(4, 4, 6, 32)
+    const meterial = new MeshBasicMaterial({color: 'red'})
+    const cylinder = new Mesh(geometry, meterial)
+    Yscene.scene.add(cylinder)
+  }
+
+  createCone() {
+    const geometry = new ConeGeometry(4, 6, 32 );
+    const material = new MeshBasicMaterial({color: 'red'});
+    const cone = new Mesh(geometry, material);
+    Yscene.scene.add(cone)
+  }
+
+  createSphere() {
+    const geometry = new SphereGeometry(4, 32, 16)
+    const material = new MeshBasicMaterial({color: 'red'})
+    const sphere = new Mesh(geometry, material)
+    Yscene.scene.add(sphere)
+  }
+
+  createTorus() {
+    const geometry = new TorusGeometry(4, 1, 16, 100)
+    const material = new MeshBasicMaterial({color: 'red'})
+    const torus = new Mesh(geometry, material)
+    Yscene.scene.add(torus)
+  }
+
+  createIcosahedron() {
+    const geometry = new IcosahedronGeometry(4, 0)
+    const meterial = new MeshBasicMaterial({color: 'red'})
+    const icosahedron = new Mesh(geometry, meterial)
+    Yscene.scene.add(icosahedron)
+  }
+
+  createCapsule() {
+    const geometry = new CapsuleGeometry(4, 1, 4, 8)
+    const meterial = new MeshBasicMaterial({color: 'red'})
+    const capsule = new Mesh(geometry, meterial)
+    Yscene.scene.add(capsule)
   }
 }
 
