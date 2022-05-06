@@ -63,4 +63,55 @@
     background: #e6e6e6;
     border-left: 2px solid #000;
   }
+
+  #viewControl {
+    position: absolute;
+    top: 50px;
+    right: 310px;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #totop, #toright, #tobottom, #toleft {
+      cursor: pointer;
+    }
+
+    #totop {
+      position: absolute;
+      top: 0;
+      left: calc(50% - 20px);
+      width: 40px;
+      height: 40px;
+    }
+
+    #toright {
+      position: absolute;
+      top: 30px;
+      right: 0;
+      width: 40px;
+      height: 40px;
+    }
+
+    #tobottom {
+      position: absolute;
+      top: 60px;
+      left: calc(50% - 20px);
+      width: 40px;
+      height: 40px;
+    }
+
+    #toleft {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
