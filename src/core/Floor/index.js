@@ -18,7 +18,7 @@ class YFloor {
   }
 
   init() {
-    const geometry = new PlaneGeometry(400, 400, 40, 40)
+    const geometry = new PlaneGeometry(400, 400, 200, 200)
     const meterial = new MeshBasicMaterial({
       wireframe: true,
       color: 0xaaaaaa,

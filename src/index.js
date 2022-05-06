@@ -13,6 +13,8 @@ import Yrenderer from "./core/Render";
 import Yscene from "./core/Scene";
 import Ylight from "./core/Light";
 import Yfloor from "./core/Floor";
+import Yevents from "./core/Events";
+import Ygeometry from "./core/Geometry";
 import { Tooltip } from "antd";
 import iconAdd from "./assets/img/controllers/add.svg";
 import iconReduce from "./assets/img/controllers/reduce.svg";
@@ -24,6 +26,8 @@ class MB extends Component {
     Yscene.init()
     Ylight.init()
     Yfloor.init()
+    Ygeometry.initMainLeft(["MLbox", "MLcylinder", "MLcone", "MLsphere", "MLtorus", "MLicosahedron", "MLcapsule"])
+    Yevents.initThreeClickEvent(document.getElementById('MB'))
     Yrenderer.renderer.render(Yscene.scene, Ycamera.camera)
   }
 
@@ -51,7 +55,15 @@ class MB extends Component {
         </div>
 
         {/* 几何体区域 */}
-        <div id="mainLeft"></div>
+        <div id="mainLeft">
+          <div id="MLbox" className="geometryItem"></div>
+          <div id="MLcylinder" className="geometryItem"></div>
+          <div id="MLcone" className="geometryItem"></div>
+          <div id="MLsphere" className="geometryItem"></div>
+          <div id="MLtorus" className="geometryItem"></div>
+          <div id="MLicosahedron" className="geometryItem"></div>
+          <div id="MLcapsule"className="geometryItem"></div>
+        </div>
 
         {/* 图层区域 */}
         <div id="mainRight"></div>

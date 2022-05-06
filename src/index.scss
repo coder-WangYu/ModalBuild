@@ -45,6 +45,13 @@
     width: 300px;
     background: #e6e6e6;
     border-right: 2px solid #000;
+
+    .geometryItem {
+      float: left;
+      width: 50%;
+      height: 14%;
+      cursor: pointer;
+    }
   }
 
   #mainRight {

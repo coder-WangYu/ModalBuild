@@ -30,22 +30,22 @@ class YCamera {
 
   // 增加变焦倍数
   zoomAdd() {
-    if (this.zoom === 5) {
+    if (this.zoom === 20) {
       return
     }
     this.zoom ++
-    this.camera.zoom ++
+    this.camera.zoom += 2
     this.camera.updateProjectionMatrix()
     Yrender.renderer.render(Yscene.scene, this.camera)
   }
 
   // 减少变焦倍数
   zoomReduce() {
-    if (this.zoom === 1) {
+    if (this.zoom === 2) {
       return
     }
     this.zoom --
-    this.camera.zoom --
+    this.camera.zoom -= 2
     this.camera.updateProjectionMatrix()
     Yrender.renderer.render(Yscene.scene, this.camera)
   }
