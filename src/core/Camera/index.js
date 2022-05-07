@@ -17,8 +17,8 @@ class YCamera {
 
   init(w, h) {
     let camera = new OrthographicCamera(w / -2, w / 2, h / 2, h / -2, 1, 1000)
-    camera.position.x = 100
-    camera.position.y = 200
+    camera.position.x = -100
+    camera.position.y = 150
     camera.position.z = 200
 
     camera.lookAt(0, 0, 0)
@@ -30,7 +30,7 @@ class YCamera {
 
   // 增加变焦倍数
   zoomAdd() {
-    if (this.zoom === 20) {
+    if (this.zoom === 40) {
       return
     }
     this.zoom ++

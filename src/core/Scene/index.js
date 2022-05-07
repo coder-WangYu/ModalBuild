@@ -18,7 +18,7 @@ class YScene {
 
   // TODO 用完删除
   initHelper() {
-    const axes = new AxesHelper(100)
+    const axes = new AxesHelper(200)
     this.scene.add(axes)
   }
 }
