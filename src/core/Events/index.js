@@ -10,24 +10,28 @@ import Yrender from "../Render";
 import Ycamera from "../Camera";
 import Yscene from "../Scene";
 import Yfloor from "../Floor";
+import Ygeometry from "../Geometry";
 
 class YEvents {
+  // 射线法选中几何体
   initThreeClickEvent(wrapper) {
     // 创建射线
     const raycaster = new Raycaster()
     // 创建矢量坐标
     const pointer = new Vector2()
     // 开启鼠标按下事件监听
-    wrapper.addEventListener("pointermove", onWrapperMousedown, false)
-    // 事件逻辑 TODO 完善事件
+    wrapper.addEventListener("click", onWrapperMousedown, false)
+    // 事件逻辑
     function onWrapperMousedown(e) {
       e.preventDefault()
       pointer.x = (e.clientX / Yrender.renderer.domElement.clientWidth) * 2 - 1;
       pointer.y = -(e.clientY / Yrender.renderer.domElement.clientHeight) * 2 + 1;
       raycaster.setFromCamera(pointer, Ycamera.camera)
-      // console.log(Yscene)
       const intersects = raycaster.intersectObjects(Yscene.scene.children);
-      // console.log(intersects)
+      const nearMesh = intersects.reverse()[0] // 距离最近的几何体
+      if (nearMesh) {
+        Ygeometry.initControllerSystem(nearMesh)
+      }
     }
   }
 
@@ -39,22 +43,30 @@ class YEvents {
     const v_left = document.getElementById(left)
 
     v_top.addEventListener('mousedown', event => {
-      Yfloor.floor.rotation.x += 1 * Math.PI / 180
+      Yscene.scene.children.forEach(child => {
+        child.rotation.x += 1 * Math.PI / 180
+      })
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
 
     v_right.addEventListener('mousedown', event => {
-      Yfloor.floor.rotation.y += 1 * Math.PI / 180
+      Yscene.scene.children.forEach(child => {
+        child.rotation.y += 1 * Math.PI / 180
+      })
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
 
     v_bottom.addEventListener('mousedown', event => {
-      Yfloor.floor.rotation.x -= 1 * Math.PI / 180
+      Yscene.scene.children.forEach(child => {
+        child.rotation.x -= 1 * Math.PI / 180
+      })
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
 
     v_left.addEventListener('mousedown', event => {
-      Yfloor.floor.rotation.y -= 1 * Math.PI / 180
+      Yscene.scene.children.forEach(child => {
+        child.rotation.y -= 1 * Math.PI / 180
+      })
       Yrender.renderer.render(Yscene.scene, Ycamera.camera)
     });
   }
