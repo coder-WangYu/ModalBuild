@@ -8,7 +8,8 @@
 import {AxesHelper, Scene} from "three";
 class YScene {
   constructor() {
-    this.scene = undefined
+    this.scene = null
+    this.axes = null
   }
 
   init() {
@@ -16,10 +17,13 @@ class YScene {
     this.scene = scene
   }
 
-  // TODO 用完删除
-  initHelper() {
-    const axes = new AxesHelper(200)
-    this.scene.add(axes)
+  showAxes() {
+    this.axes = new AxesHelper(200)
+    this.scene.add(this.axes)
+  }
+
+  hiddenAxes() {
+    this.scene.remove(this.axes)
   }
 }
 

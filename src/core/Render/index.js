@@ -18,7 +18,7 @@ class YRender {
     })
     renderer.setSize(w, h)
     document.getElementById('MB').appendChild(renderer.domElement)
-    renderer.setClearColor(0xffffff, 1.0)
+    renderer.setClearColor(0x000000, 1.0)
     this.renderer = renderer
   }
 }

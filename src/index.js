@@ -17,6 +17,11 @@ import Yevents from "./core/Events";
 import Ygeometry from "./core/Geometry";
 import Ycontrol from "./core/Control";
 import { Clock } from "three";
+import {Tooltip} from "antd";
+import iconAxes from "./assets/icon/axes.png";
+import iconAxesChoose from "./assets/icon/axesChoose.png";
+import iconGrid from "./assets/icon/grid.png";
+import iconGridChoose from "./assets/icon/gridChoose.png";
 
 let clock = new Clock()
 
@@ -24,8 +29,8 @@ class MB extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      handChoose: false,
-      viewChoose: ""
+      axesVisible: false,
+      gridVisible: false
     }
     this.clock = new Clock()
   }
@@ -34,8 +39,6 @@ class MB extends Component {
     Ycamera.init(w, h)
     Yrenderer.init(w, h)
     Yscene.init()
-    // TODO 坐标系辅助 用完删除
-    Yscene.initHelper()
     Ylight.init()
     Yfloor.init()
     Ycontrol.initViewController()
@@ -83,12 +86,41 @@ class MB extends Component {
     Yrenderer.renderer.render(Yscene.scene, Ycamera.camera)
   }
 
+  switchAxes() {
+    this.state.axesVisible = !this.state.axesVisible
+    this.state.axesVisible
+      ? Yscene.showAxes()
+      : Yscene.hiddenAxes()
+    this.setState({
+      axesVisible: this.state.axesVisible
+    })
+  }
+
+  switchGrid() {
+    this.state.gridVisible = !this.state.gridVisible
+    this.state.gridVisible
+      ? Yfloor.showGrid()
+      : Yfloor.hiddenGrid()
+    this.setState({
+      gridVisible: this.state.gridVisible
+    })
+  }
+
   render() {
     return (
       <div id="MB">
         {/* 控件区域 */}
         <div id="mainTop">
-
+          <Tooltip placement="bottom" title="开启/关闭地面栅格辅助">
+            <div className="btnItem" onClick={() => this.switchGrid()}>
+              <img src={this.state.gridVisible ? iconGridChoose : iconGrid} alt=""/>
+            </div>
+          </Tooltip>
+          <Tooltip placement="bottom" title="开启/关闭坐标轴辅助">
+            <div className="btnItem" onClick={() => this.switchAxes()}>
+              <img src={this.state.axesVisible ? iconAxesChoose : iconAxes} alt=""/>
+            </div>
+          </Tooltip>
         </div>
 
         {/* 几何体区域 */}

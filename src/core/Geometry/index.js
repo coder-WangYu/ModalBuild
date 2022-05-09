@@ -15,7 +15,6 @@ import {
   CylinderGeometry,
   ConeGeometry,
   SphereGeometry,
-  TorusGeometry,
   IcosahedronGeometry,
   CapsuleGeometry
 } from "three";
