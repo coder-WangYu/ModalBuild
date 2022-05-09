@@ -47,6 +47,7 @@ class MB extends Component {
     Ylight.init()
     Yfloor.init()
     Ygeometry.initMainLeft(["MLbox", "MLcylinder", "MLcone", "MLsphere", "MLtorus", "MLicosahedron", "MLcapsule"])
+    Yevents.initWindowResize()
     Yevents.initThreeClickEvent(document.getElementById('MB'))
     Yevents.initViewMouseDownEvent("totop", "toright", "tobottom", "toleft")
     Yrenderer.renderer.render(Yscene.scene, Ycamera.camera)

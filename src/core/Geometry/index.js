@@ -125,39 +125,32 @@ class YGeometry {
     const renderPass = new RenderPass(Yscene.scene, Ycamera.camera)
     composer.addPass(renderPass)
     // 物体边缘发光通道
+    const MB = document.getElementById("MB")
     const outlinePass = new OutlinePass(
-      new Vector2(window.innerWidth, window.innerHeight),
+      new Vector2(MB.clientWidth, MB.clientHeight),
       Yscene.scene,
       Ycamera.camera,
       mesh
     )
+    composer.addPass(outlinePass)
+    outlinePass.renderToScreen = true
     outlinePass.selectedObjects = mesh
     outlinePass.edgeStrength = 10.0 // 边框的亮度
     outlinePass.edgeGlow = 1// 光晕[0,1]
     outlinePass.usePatternTexture = false // 是否使用父级的材质
-    outlinePass.edgeThickness = 1.0 // 边框宽度
+    outlinePass.edgeThickness = 10.0 // 边框宽度
     outlinePass.downSampleRatio = 1 // 边框弯曲度
     outlinePass.pulsePeriod = 5 // 呼吸闪烁的速度
-    outlinePass.visibleEdgeColor.set(parseInt(0x00ff00)) // 呼吸显示的颜色
-    outlinePass.hiddenEdgeColor = new Color(0, 0, 0) // 呼吸消失的颜色
+    outlinePass.visibleEdgeColor.set(0xffffff) // 呼吸显示的颜色
+    outlinePass.hiddenEdgeColor.set(0xffffff) // 呼吸消失的颜色
     outlinePass.clear = true
-    composer.addPass(outlinePass)
     // 自定义的着色器通道 作为参数
     const effectFXAA = new ShaderPass(FXAAShader)
-    effectFXAA.uniforms.resolution.value.set(1 / window.innerWidth, 1 / window.innerHeight)
-    effectFXAA.renderToScreen = true
+    effectFXAA.uniforms.resolution.value.set(1 / MB.clientWidth, 1 / MB.clientHeight)
+    // effectFXAA.renderToScreen = true
     composer.addPass(effectFXAA)
-
-    // 渲染
-    function animate () {
-      Yrender.renderer.render(Yscene.scene, Ycamera.camera);
-      //scene.rotateY(0.01);//每次绕y轴旋转0.01弧度
-      requestAnimationFrame(animate);
-      if (composer) {
-        composer.render()
-      }
-    }
-    animate()
+    composer.render(Yscene.scene, Ycamera.camera)
+    // Yrender.renderer.render(Yscene.scene, Ycamera.camera);
   }
 
   // 创建伸缩系统
@@ -182,6 +175,7 @@ class YGeometry {
     box.position.x = 0
     box.position.y = 4.2
     box.position.z = 0
+    box.name = "测试"
     Yscene.scene.add(box)
 
   }

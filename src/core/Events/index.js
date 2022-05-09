@@ -13,6 +13,15 @@ import Yfloor from "../Floor";
 import Ygeometry from "../Geometry";
 
 class YEvents {
+  // 监听视口拉伸事件
+  initWindowResize() {
+    window.addEventListener("resize", () => {
+      Ycamera.camera.aspect = window.innerWidth / window.innerHeight
+      Ycamera.camera.updateProjectionMatrix()
+      Yrender.renderer.setSize(window.innerWidth, window.innerHeight)
+    })
+  }
+
   // 射线法选中几何体
   initThreeClickEvent(wrapper) {
     // 创建射线
@@ -28,7 +37,7 @@ class YEvents {
       pointer.y = -(e.clientY / Yrender.renderer.domElement.clientHeight) * 2 + 1;
       raycaster.setFromCamera(pointer, Ycamera.camera)
       const intersects = raycaster.intersectObjects(Yscene.scene.children);
-      const nearMesh = intersects.reverse()[0] // 距离最近的几何体
+      const nearMesh = intersects[0] // 距离最近的几何体
       if (nearMesh) {
         Ygeometry.initControllerSystem(nearMesh)
       }
