@@ -37,19 +37,27 @@
     }
   }
 
-  #mainLeft {
+  .buttonControl {
     position: absolute;
-    left: 0;
-    top: 60px;
-    height: calc(100% - 60px);
+    top: 70px;
+    left: 10px;
+  }
+
+  #meshList, #physicList {
+    position: absolute;
+    left: 10px;
+    top: 120px;
+    max-height: 50%;
+    overflow-y: auto;
     width: 300px;
     background: #e6e6e6;
-    border-right: 2px solid #000;
+    border-radius: 4px;
 
     .geometryItem {
+      margin: 5px;
       float: left;
-      width: 50%;
-      height: 14%;
+      width: calc(50% - 10px);
+      min-height: 140px;
       cursor: pointer;
     }
   }

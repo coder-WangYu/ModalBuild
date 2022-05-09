@@ -22,8 +22,12 @@ import Yscene from "../Scene";
 import Ycontrol from "../Control";
 
 class YGeometry {
-  // 创建左边栏几何体菜单
-  initMainLeft(ids) {
+  constructor() {
+    this.meshList = false
+    this.physicList = false
+  }
+  // 创建几何体菜单
+  initMeshList(ids) {
     // 获取单元格宽高
     const width = document.getElementById("MLbox").clientWidth
     const height = document.getElementById("MLbox").clientHeight
@@ -100,6 +104,13 @@ class YGeometry {
       animate()
     }
     initMainLeftMesh()
+
+    this.meshList = true
+  }
+
+  // TODO 创建物理引擎菜单
+  initPhysicList(ids) {
+    this.physicList = true
   }
 
   createBox() {

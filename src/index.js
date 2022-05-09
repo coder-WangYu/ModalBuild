@@ -17,7 +17,7 @@ import Yevents from "./core/Events";
 import Ygeometry from "./core/Geometry";
 import Ycontrol from "./core/Control";
 import { Clock } from "three";
-import {Tooltip} from "antd";
+import {Tooltip, Button} from "antd";
 import iconAxes from "./assets/icon/axes.png";
 import iconAxesChoose from "./assets/icon/axesChoose.png";
 import iconGrid from "./assets/icon/grid.png";
@@ -30,7 +30,9 @@ class MB extends Component {
     super(props);
     this.state = {
       axesVisible: false,
-      gridVisible: false
+      gridVisible: false,
+      meshListVisible: "none",
+      physicListVisible: "none"
     }
     this.clock = new Clock()
   }
@@ -43,7 +45,6 @@ class MB extends Component {
     Yfloor.init()
     Ycontrol.initViewController()
     Ycontrol.initControllerSystem()
-    Ygeometry.initMainLeft(["MLbox", "MLcylinder", "MLcone", "MLsphere", "MLtorus", "MLicosahedron", "MLcapsule"])
     Yevents.initWindowResize()
     Yevents.initThreeClickEvent(document.getElementById('MB'))
     Yrenderer.renderer.render(Yscene.scene, Ycamera.camera)
@@ -106,6 +107,33 @@ class MB extends Component {
     })
   }
 
+  switchMeshList() {
+    this.setState({
+      meshListVisible: "block",
+      physicListVisible: "none"
+    }, () => {
+      if (!Ygeometry.meshList) {
+        Ygeometry.initMeshList(["MLbox", "MLcylinder", "MLcone", "MLsphere", "MLtorus", "MLicosahedron", "MLcapsule"])
+      }
+    })
+  }
+
+  switchPhysicList() {
+    this.setState({
+      meshListVisible: "none",
+      physicListVisible: "block"
+    }, () => {
+      Ygeometry.initPhysicList(["MLbox", "MLcylinder", "MLcone"])
+    })
+  }
+
+  switchList() {
+    this.setState({
+      meshListVisible: "none",
+      physicListVisible: "none"
+    })
+  }
+
   render() {
     return (
       <div id="MB">
@@ -124,13 +152,30 @@ class MB extends Component {
         </div>
 
         {/* 几何体区域 */}
-        <div id="mainLeft">
+        <div className="buttonControl">
+          <Tooltip placement="top" title="开启/关闭几何体列表">
+            <Button onClick={() => this.switchMeshList()}>几何体</Button>
+          </Tooltip>
+          <Tooltip placement="top" title="开启/关闭物理引擎列表">
+            <Button onClick={() => this.switchPhysicList()}>物理引擎</Button>
+          </Tooltip>
+          <Tooltip placement="top" title="隐藏列表">
+            <Button onClick={() => this.switchList()}>×</Button>
+          </Tooltip>
+        </div>
+        <div id="meshList" style={{display: this.state.meshListVisible}}>
           <div id="MLbox" className="geometryItem" onClick={() => this.createMesh('box')}/>
           <div id="MLcylinder" className="geometryItem" onClick={() => this.createMesh('cylinder')}/>
           <div id="MLcone" className="geometryItem" onClick={() => this.createMesh('cone')}/>
           <div id="MLsphere" className="geometryItem" onClick={() => this.createMesh('sphere')}/>
           <div id="MLicosahedron" className="geometryItem" onClick={() => this.createMesh('icosahedron')}/>
           <div id="MLcapsule"className="geometryItem" onClick={() => this.createMesh('capsule')}/>
+        </div>
+        <div id="physicList" style={{display: this.state.physicListVisible}}>
+          {/* TODO 添加物理引擎 */}
+          <div className="geometryItem">
+            待开发...
+          </div>
         </div>
 
         {/* 图层区域 */}
