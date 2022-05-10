@@ -115,7 +115,7 @@ class YGeometry {
 
   createBox() {
     const geometry = new BoxGeometry(1, 1, 1)
-    const meterial = new MeshBasicMaterial({color: 'red'})
+    const meterial = new MeshBasicMaterial({color: 'grey'})
     const box = new Mesh(geometry, meterial)
     box.position.x = 0
     box.position.y = 0.5
@@ -126,7 +126,7 @@ class YGeometry {
 
   createCylinder() {
     const geometry = new CylinderGeometry(.5, .5, 1, 32)
-    const meterial = new MeshBasicMaterial({color: 'red'})
+    const meterial = new MeshBasicMaterial({color: 'grey'})
     const cylinder = new Mesh(geometry, meterial)
     cylinder.position.x = 0
     cylinder.position.y = 0.5
@@ -137,7 +137,7 @@ class YGeometry {
 
   createCone() {
     const geometry = new ConeGeometry(.5, 1, 32 );
-    const material = new MeshBasicMaterial({color: 'red'});
+    const material = new MeshBasicMaterial({color: 'grey'});
     const cone = new Mesh(geometry, material);
     cone.position.x = 0
     cone.position.y = 0.5
@@ -148,7 +148,7 @@ class YGeometry {
 
   createSphere() {
     const geometry = new SphereGeometry(.5, 32, 16)
-    const material = new MeshBasicMaterial({color: 'red'})
+    const material = new MeshBasicMaterial({color: 'grey'})
     const sphere = new Mesh(geometry, material)
     sphere.position.x = 0
     sphere.position.y = 0.5
@@ -159,7 +159,7 @@ class YGeometry {
 
   createIcosahedron() {
     const geometry = new IcosahedronGeometry(.5, 0)
-    const meterial = new MeshBasicMaterial({color: 'red'})
+    const meterial = new MeshBasicMaterial({color: 'grey'})
     const icosahedron = new Mesh(geometry, meterial)
     icosahedron.position.x = 0
     icosahedron.position.y = 0.45
@@ -170,7 +170,7 @@ class YGeometry {
 
   createCapsule() {
     const geometry = new CapsuleGeometry(.5, .5, 4, 8)
-    const meterial = new MeshBasicMaterial({color: 'red'})
+    const meterial = new MeshBasicMaterial({color: 'grey'})
     const capsule = new Mesh(geometry, meterial)
     capsule.position.x = 0
     capsule.position.y = .72

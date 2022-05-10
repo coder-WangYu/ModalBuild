@@ -37,7 +37,7 @@ class MB extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      axesVisible: true,
+      axesVisible: false,
       gridVisible: true,
       controlVisible: "none",
       meshListVisible: "none",
@@ -177,6 +177,15 @@ class MB extends Component {
     this.setState({
       controlType: ""
     })
+    for (let key in Ycontrol.translateSystem) {
+      Yscene.scene.remove(Ycontrol.translateSystem[key])
+    }
+    for (let key in Ycontrol.rotateSystem) {
+      Yscene.scene.remove(Ycontrol.rotateSystem[key])
+    }
+    for (let key in Ycontrol.scaleSystem) {
+      Yscene.scene.remove(Ycontrol.scaleSystem[key])
+    }
     document.getElementById("MB").style.cursor = "default"
   }
 

@@ -9,7 +9,15 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer";
 import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
 import {OutlinePass} from "three/examples/jsm/postprocessing/OutlinePass";
-import {Mesh, MeshBasicMaterial, PlaneGeometry, Vector2} from "three";
+import {
+  ConeGeometry,
+  CylinderGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  Object3D,
+  PlaneGeometry,
+  Vector2
+} from "three";
 import Ycamera from "../Camera";
 import Yrender from "../Render";
 import Yscene from "../Scene";
@@ -76,9 +84,15 @@ class YControl {
   // 创建控件系统
   initControllerSystem(mesh) {
     this.targetMesh = mesh
-    this.translateSystem = null
-    this.rotateSystem = null
-    this.scaleSystem = null
+    for (let key in this.translateSystem) {
+      Yscene.scene.remove(this.translateSystem[key])
+    }
+    for (let key in this.rotateSystem) {
+      Yscene.scene.remove(this.rotateSystem[key])
+    }
+    for (let key in this.scaleSystem) {
+      Yscene.scene.remove(this.scaleSystem[key])
+    }
     this.initTranslateSystem()
     document.getElementById("MB").style.cursor = "pointer"
     // 开启控件操作栏
@@ -88,19 +102,77 @@ class YControl {
   // 创建平移系统
   initTranslateSystem() {
     if (this.translateSystem) {
-      Yscene.scene.remove(this.translateSystem)
+      for (let key in this.translateSystem) {
+        Yscene.scene.remove(this.translateSystem[key])
+      }
     }
     Ycamera.camera.zoom = 50
     Ycamera.camera.updateProjectionMatrix()
-    const geometry = new PlaneGeometry(5, 5)
-    const meterial = new MeshBasicMaterial({color: "blue"})
-    const translateSystem = new Mesh(geometry, meterial)
-    translateSystem.rotation.x = - 90 * Math.PI / 180
-    translateSystem.position.x = this.targetMesh.position.x
-    translateSystem.position.y = this.targetMesh.position.y
-    translateSystem.position.z = this.targetMesh.position.z
+
+    // 创建translateX
+    const geo_cylinder_x = new CylinderGeometry(.05, .05, 1)
+    const mate_cylinder_x = new MeshBasicMaterial({color: 'red'})
+    const cylinder_x = new Mesh(geo_cylinder_x, mate_cylinder_x)
+    cylinder_x.position.x = 1
+    cylinder_x.position.y = this.targetMesh.position.y
+    cylinder_x.position.z = 0
+    cylinder_x.rotation.z = - 90 * Math.PI / 180
+    const geo_cone_x = new ConeGeometry(.1, .5)
+    const mate_cone_x = new MeshBasicMaterial({color: 'red'})
+    const cone_x = new Mesh(geo_cone_x, mate_cone_x)
+    cone_x.position.x = 1.5
+    cone_x.position.y = this.targetMesh.position.y
+    cone_x.position.z = 0
+    cone_x.rotation.z = - 90 * Math.PI / 180
+    const translateX = new Object3D()
+    translateX.add(cylinder_x)
+    translateX.add(cone_x)
+
+    // 创建translateY
+    const geo_cylinder_y = new CylinderGeometry(.05, .05, 1)
+    const mate_cylinder_y = new MeshBasicMaterial({color: 'green'})
+    const cylinder_y = new Mesh(geo_cylinder_y, mate_cylinder_y)
+    cylinder_y.position.x = 0
+    cylinder_y.position.y = 1.5
+    cylinder_y.position.z = 0
+    const geo_cone_y = new ConeGeometry(.1, .5)
+    const mate_cone_y = new MeshBasicMaterial({color: 'green'})
+    const cone_y = new Mesh(geo_cone_y, mate_cone_y)
+    cone_y.position.x = 0
+    cone_y.position.y = 2
+    cone_y.position.z = 0
+    const translateY = new Object3D()
+    translateY.add(cylinder_y)
+    translateY.add(cone_y)
+
+    // 创建translateZ
+    const geo_cylinder_z = new CylinderGeometry(.05, .05, 1)
+    const mate_cylinder_z = new MeshBasicMaterial({color: 'blue'})
+    const cylinder_z = new Mesh(geo_cylinder_z, mate_cylinder_z)
+    cylinder_z.position.x = 0
+    cylinder_z.position.y = this.targetMesh.position.y
+    cylinder_z.position.z = 1
+    cylinder_z.rotation.x = - 90 * Math.PI / 180
+    const geo_cone_z = new ConeGeometry(.1, .5)
+    const mate_cone_z = new MeshBasicMaterial({color: 'blue'})
+    const cone_z = new Mesh(geo_cone_z, mate_cone_z)
+    cone_z.position.x = 0
+    cone_z.position.y = this.targetMesh.position.y
+    cone_z.position.z = 1.5
+    cone_z.rotation.x = 90 * Math.PI / 180
+    const translateZ = new Object3D()
+    translateZ.add(cylinder_z)
+    translateZ.add(cone_z)
+
+    const translateSystem = {
+      x: translateX,
+      y: translateY,
+      z: translateZ
+    }
     this.translateSystem = translateSystem
-    Yscene.scene.add(translateSystem)
+
+    // 渲染到场景
+    Yscene.scene.add(translateX, translateY, translateZ)
   }
 
   // 创建旋转系统
@@ -117,8 +189,12 @@ class YControl {
     rotateSystem.position.x = this.targetMesh.position.x
     rotateSystem.position.y = this.targetMesh.position.y
     rotateSystem.position.z = this.targetMesh.position.z
-    this.rotateSystem = rotateSystem
+
     Yscene.scene.add(rotateSystem)
+
+    this.rotateSystem = {
+      x: rotateSystem
+    }
   }
 
   // 创建伸缩系统
@@ -135,8 +211,12 @@ class YControl {
     scaleSystem.position.x = this.targetMesh.position.x
     scaleSystem.position.y = this.targetMesh.position.y
     scaleSystem.position.z = this.targetMesh.position.z
-    this.scaleSystem = scaleSystem
+
     Yscene.scene.add(scaleSystem)
+
+    this.scaleSystem = {
+      x: scaleSystem
+    }
   }
 }
 

@@ -15,7 +15,6 @@ class YScene {
   init() {
     const scene = new Scene()
     this.scene = scene
-    this.showAxes()
   }
 
   showAxes() {
