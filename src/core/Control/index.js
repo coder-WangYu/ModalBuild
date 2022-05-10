@@ -16,7 +16,8 @@ import {
   MeshBasicMaterial,
   Object3D,
   PlaneGeometry,
-  Vector2
+  Vector2,
+  Vector3
 } from "three";
 import Ycamera from "../Camera";
 import Yrender from "../Render";
@@ -25,7 +26,6 @@ import eventBus from "../../tools/eventBus";
 
 class YControl {
   constructor() {
-    this.control = null
     this.composer = null
     this.outlinePass = null
     this.targetMesh = null
@@ -43,7 +43,6 @@ class YControl {
     controls.enableZoom = true;
     controls.minDistance = 5;
     controls.maxDistance = 1000;
-    this.control = controls
   }
 
   selected(obj) {
@@ -81,9 +80,8 @@ class YControl {
     this.composer = composer
   }
 
-  // 创建控件系统
-  initControllerSystem(mesh) {
-    this.targetMesh = mesh
+  // 移除其他控件
+  removeAnotherControllers() {
     for (let key in this.translateSystem) {
       Yscene.scene.remove(this.translateSystem[key])
     }
@@ -93,6 +91,12 @@ class YControl {
     for (let key in this.scaleSystem) {
       Yscene.scene.remove(this.scaleSystem[key])
     }
+  }
+
+  // 创建控件系统
+  initControllerSystem(mesh) {
+    this.targetMesh = mesh
+    this.removeAnotherControllers()
     this.initTranslateSystem()
     document.getElementById("MB").style.cursor = "pointer"
     // 开启控件操作栏
@@ -101,11 +105,7 @@ class YControl {
 
   // 创建平移系统
   initTranslateSystem() {
-    if (this.translateSystem) {
-      for (let key in this.translateSystem) {
-        Yscene.scene.remove(this.translateSystem[key])
-      }
-    }
+    this.removeAnotherControllers()
     Ycamera.camera.zoom = 50
     Ycamera.camera.updateProjectionMatrix()
 
@@ -164,12 +164,11 @@ class YControl {
     translateZ.add(cylinder_z)
     translateZ.add(cone_z)
 
-    const translateSystem = {
+    this.translateSystem = {
       x: translateX,
       y: translateY,
       z: translateZ
     }
-    this.translateSystem = translateSystem
 
     // 渲染到场景
     Yscene.scene.add(translateX, translateY, translateZ)
@@ -177,9 +176,7 @@ class YControl {
 
   // 创建旋转系统
   initRotateSystem() {
-    if (this.rotateSystem) {
-      Yscene.scene.remove(this.rotateSystem)
-    }
+    this.removeAnotherControllers()
     Ycamera.camera.zoom = 50
     Ycamera.camera.updateProjectionMatrix()
     const geometry = new PlaneGeometry(5, 5)
@@ -199,9 +196,7 @@ class YControl {
 
   // 创建伸缩系统
   initScaleSystem() {
-    if (this.scaleSystem) {
-      Yscene.scene.remove(this.scaleSystem)
-    }
+    this.removeAnotherControllers()
     Ycamera.camera.zoom = 50
     Ycamera.camera.updateProjectionMatrix()
     const geometry = new PlaneGeometry(5, 5)

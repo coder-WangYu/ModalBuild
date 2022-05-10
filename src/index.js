@@ -45,7 +45,6 @@ class MB extends Component {
       layerListVisible: "none",
       controlType: "translate" // 控件类型：默认平移
     }
-    this.clock = new Clock()
   }
 
   draw(w, h) {
@@ -177,15 +176,7 @@ class MB extends Component {
     this.setState({
       controlType: ""
     })
-    for (let key in Ycontrol.translateSystem) {
-      Yscene.scene.remove(Ycontrol.translateSystem[key])
-    }
-    for (let key in Ycontrol.rotateSystem) {
-      Yscene.scene.remove(Ycontrol.rotateSystem[key])
-    }
-    for (let key in Ycontrol.scaleSystem) {
-      Yscene.scene.remove(Ycontrol.scaleSystem[key])
-    }
+    Ycontrol.removeAnotherControllers()
     document.getElementById("MB").style.cursor = "default"
   }
 
