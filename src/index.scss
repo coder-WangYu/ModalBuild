@@ -56,7 +56,7 @@
     .geometryItem {
       margin: 5px;
       float: left;
-      width: calc(50% - 10px);
+      min-width: 140px;
       min-height: 140px;
       cursor: pointer;
     }
@@ -70,6 +70,12 @@
     width: 300px;
     background: #e6e6e6;
     border-radius: 4px;
+    overflow-y: auto;
+
+    .layerItem {
+      margin: 10px;
+      cursor: pointer;
+    }
   }
 
   .buttonControlRight {

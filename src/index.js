@@ -135,18 +135,6 @@ class MB extends Component {
     })
   }
 
-  switchLayerList() {
-    this.setState({
-      layerListVisible: "block"
-    })
-  }
-
-  switchListRight() {
-    this.setState({
-      layerListVisible: "none"
-    })
-  }
-
   render() {
     return (
       <div id="MB">
@@ -190,19 +178,6 @@ class MB extends Component {
           <div className="geometryItem">
             待开发...
           </div>
-        </div>
-
-        {/* 图层区域 */}
-        <div className="buttonControlRight">
-          <Tooltip placement="top" title="开启/关闭图层列表">
-            <Button onClick={() => this.switchLayerList()}>图层</Button>
-          </Tooltip>
-          <Tooltip placement="top" title="隐藏列表">
-            <Button onClick={() => this.switchListRight()}>×</Button>
-          </Tooltip>
-        </div>
-        <div id="layerList" style={{display: this.state.layerListVisible}}>
-
         </div>
       </div>
     );

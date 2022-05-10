@@ -10,7 +10,6 @@ import Yrender from "../Render";
 import Ycamera from "../Camera";
 import Yscene from "../Scene";
 import Ycontrol from "../Control";
-import Ylayer from "../Layer";
 
 class YEvents {
   // 监听视口拉伸事件
@@ -41,16 +40,6 @@ class YEvents {
       // 添加选中效果
       if (nearMesh && nearMesh.object.type === "Mesh") {
         Ycontrol.selected(nearMesh.object)
-      }
-      // 创建图层
-      if (intersects.length) {
-        const selected = intersects.filter(item =>
-          item.object.type === "Mesh" &&
-          item.object.name !== "FLOOR"
-        )
-        if (selected.length) {
-          Ylayer.init(selected.map(item => item.object))
-        }
       }
     }
   }
