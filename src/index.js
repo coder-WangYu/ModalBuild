@@ -22,6 +22,14 @@ import iconAxes from "./assets/icon/axes.png";
 import iconAxesChoose from "./assets/icon/axesChoose.png";
 import iconGrid from "./assets/icon/grid.png";
 import iconGridChoose from "./assets/icon/gridChoose.png";
+import iconTranslate from "./assets/icon/translate.png";
+import iconTranslateChoose from "./assets/icon/translateChoose.png";
+import iconRotate from "./assets/icon/rotate.png";
+import iconRotateChoose from "./assets/icon/rotateChoose.png";
+import iconScale from "./assets/icon/scale.png";
+import iconScaleChoose from "./assets/icon/scaleChoose.png";
+import iconCancel from "./assets/icon/cancel.png";
+import eventBus from "./tools/eventBus";
 
 let clock = new Clock()
 
@@ -29,11 +37,13 @@ class MB extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      axesVisible: false,
-      gridVisible: false,
+      axesVisible: true,
+      gridVisible: true,
+      controlVisible: "none",
       meshListVisible: "none",
       physicListVisible: "none",
-      layerListVisible: "none"
+      layerListVisible: "none",
+      controlType: "translate" // 控件类型：默认平移
     }
     this.clock = new Clock()
   }
@@ -45,7 +55,7 @@ class MB extends Component {
     Ylight.init()
     Yfloor.init()
     Ycontrol.initViewController()
-    Ycontrol.initControllerSystem()
+    Ycontrol.initOutlinePass()
     Yevents.initWindowResize()
     Yevents.initThreeClickEvent(document.getElementById('MB'))
     Yrenderer.renderer.render(Yscene.scene, Ycamera.camera)
@@ -61,7 +71,17 @@ class MB extends Component {
   componentDidMount() {
     const width = document.getElementById('MB').clientWidth
     const height = document.getElementById('MB').clientHeight
+    eventBus.on("showController", () => {
+      this.setState({
+        controlVisible: "block",
+        controlType: "translate"
+      })
+    })
     this.draw(width, height)
+  }
+
+  componentWillUnmount() {
+    eventBus.off("showController")
   }
 
   createMesh(type) {
@@ -135,6 +155,31 @@ class MB extends Component {
     })
   }
 
+  switchController(type) {
+    this.setState({
+      controlType: type
+    })
+    switch (type) {
+      case "translate":
+        Ycontrol.initTranslateSystem()
+        break
+      case "rotate":
+        Ycontrol.initRotateSystem()
+        break
+      case "scale":
+        Ycontrol.initScaleSystem()
+        break
+    }
+    document.getElementById("MB").style.cursor = "pointer"
+  }
+
+  clearControl() {
+    this.setState({
+      controlType: ""
+    })
+    document.getElementById("MB").style.cursor = "default"
+  }
+
   render() {
     return (
       <div id="MB">
@@ -178,6 +223,31 @@ class MB extends Component {
           <div className="geometryItem">
             待开发...
           </div>
+        </div>
+
+        {/* 控件区域 */}
+        <div className="meshController" style={{display: this.state.controlVisible}}>
+          <button
+            className={this.state.controlType === 'translate' ? "activeButton" : ""}
+            onClick={() => this.switchController('translate')}
+          >
+            <img src={this.state.controlType === 'translate' ? iconTranslateChoose : iconTranslate} alt=""/>
+          </button>
+          <button
+            className={this.state.controlType === 'rotate' ? "activeButton" : ""}
+            onClick={() => this.switchController('rotate')}
+          >
+            <img src={this.state.controlType === 'rotate' ? iconRotateChoose : iconRotate} alt=""/>
+          </button>
+          <button
+            className={this.state.controlType === 'scale' ? "activeButton" : ""}
+            onClick={() => this.switchController('scale')}
+          >
+            <img src={this.state.controlType === 'scale' ? iconScaleChoose : iconScale} alt=""/>
+          </button>
+          <button onClick={() => this.clearControl()}>
+            <img src={iconCancel} alt=""/>
+          </button>
         </div>
       </div>
     );

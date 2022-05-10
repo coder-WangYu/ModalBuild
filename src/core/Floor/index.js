@@ -32,6 +32,7 @@ class YFloor {
     floor.rotation.x = -90 * Math.PI / 180
     Yscene.scene.add(floor)
     this.floor = floor
+    this.showGrid()
   }
 
   showGrid() {
