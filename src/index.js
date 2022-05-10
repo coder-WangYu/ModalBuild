@@ -32,7 +32,8 @@ class MB extends Component {
       axesVisible: false,
       gridVisible: false,
       meshListVisible: "none",
-      physicListVisible: "none"
+      physicListVisible: "none",
+      layerListVisible: "none"
     }
     this.clock = new Clock()
   }
@@ -127,10 +128,22 @@ class MB extends Component {
     })
   }
 
-  switchList() {
+  switchListLeft() {
     this.setState({
       meshListVisible: "none",
       physicListVisible: "none"
+    })
+  }
+
+  switchLayerList() {
+    this.setState({
+      layerListVisible: "block"
+    })
+  }
+
+  switchListRight() {
+    this.setState({
+      layerListVisible: "none"
     })
   }
 
@@ -152,7 +165,7 @@ class MB extends Component {
         </div>
 
         {/* 几何体区域 */}
-        <div className="buttonControl">
+        <div className="buttonControlLeft">
           <Tooltip placement="top" title="开启/关闭几何体列表">
             <Button onClick={() => this.switchMeshList()}>几何体</Button>
           </Tooltip>
@@ -160,7 +173,7 @@ class MB extends Component {
             <Button onClick={() => this.switchPhysicList()}>物理引擎</Button>
           </Tooltip>
           <Tooltip placement="top" title="隐藏列表">
-            <Button onClick={() => this.switchList()}>×</Button>
+            <Button onClick={() => this.switchListLeft()}>×</Button>
           </Tooltip>
         </div>
         <div id="meshList" style={{display: this.state.meshListVisible}}>
@@ -171,6 +184,7 @@ class MB extends Component {
           <div id="MLicosahedron" className="geometryItem" onClick={() => this.createMesh('icosahedron')}/>
           <div id="MLcapsule"className="geometryItem" onClick={() => this.createMesh('capsule')}/>
         </div>
+        {/* 物理引擎区域 */}
         <div id="physicList" style={{display: this.state.physicListVisible}}>
           {/* TODO 添加物理引擎 */}
           <div className="geometryItem">
@@ -179,7 +193,17 @@ class MB extends Component {
         </div>
 
         {/* 图层区域 */}
-        <div id="mainRight"></div>
+        <div className="buttonControlRight">
+          <Tooltip placement="top" title="开启/关闭图层列表">
+            <Button onClick={() => this.switchLayerList()}>图层</Button>
+          </Tooltip>
+          <Tooltip placement="top" title="隐藏列表">
+            <Button onClick={() => this.switchListRight()}>×</Button>
+          </Tooltip>
+        </div>
+        <div id="layerList" style={{display: this.state.layerListVisible}}>
+
+        </div>
       </div>
     );
   }

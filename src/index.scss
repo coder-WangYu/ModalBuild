@@ -37,7 +37,7 @@
     }
   }
 
-  .buttonControl {
+  .buttonControlLeft {
     position: absolute;
     top: 70px;
     left: 10px;
@@ -62,14 +62,20 @@
     }
   }
 
-  #mainRight {
+  #layerList {
     position: absolute;
-    right: 0;
-    top: 60px;
-    height: calc(100% - 60px);
+    right: 10px;
+    top: 120px;
+    max-height: 80%;
     width: 300px;
     background: #e6e6e6;
-    border-left: 2px solid #000;
+    border-radius: 4px;
+  }
+
+  .buttonControlRight {
+    position: absolute;
+    top: 70px;
+    right: 10px;
   }
 
   #viewControl {
